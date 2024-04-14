@@ -1053,7 +1053,7 @@ Matrix4x4 MakeRotateZMatrix(float radian) {
 Matrix4x4 MakeRotateXYZMatrix(const Vector3& rotate) {
 
 	Matrix4x4 RotateMatrix = { 0 };
-
+	rotate;
 	//RotateMatrix.m[0][0] = std::cosf(rotate.y) * std::cosf(rotate.z);
 	//RotateMatrix.m[0][1] = std::sinf(rotate.z);
 	//RotateMatrix.m[0][2] = -(std::sinf(rotate.y));

@@ -5,19 +5,19 @@ const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_00_05";
 //3次元アフィン変換行列
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
 
-
+	//並行移動行列
 	Matrix4x4 TranslateMatrix = MakeTranslateMatrix(translate);
 
-	Matrix4x4 ScaleMatrix = MakeScaleMatrix(scale);
-
+	//各軸の回転行列
 	Matrix4x4 rotateX = MakeRotateXMatrix(rotate.x);
 	Matrix4x4 rotateY = MakeRotateYMatrix(rotate.y);
 	Matrix4x4 rotateZ= MakeRotateZMatrix(rotate.z);
-
+	//回転行列
 	Matrix4x4 rotateXYZ= Multiply(rotateX,Multiply(rotateY,rotateZ));
+	//拡大縮小行列
+	Matrix4x4 ScaleMatrix = MakeScaleMatrix(scale);
 
-
-	
+	//全部合わせてアフィン行列を作る
 	Matrix4x4 AffineMatrix = Multiply(Multiply(ScaleMatrix, rotateXYZ), TranslateMatrix);
 
 
