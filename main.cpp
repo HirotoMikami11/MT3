@@ -1,6 +1,6 @@
 #include <MyMath.h>
 
-const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3";
+const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_タイトル";
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {

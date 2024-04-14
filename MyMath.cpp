@@ -961,3 +961,91 @@ Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix) {
 
 	return result;
 };
+
+// 1 X軸回転行列
+Matrix4x4 MakeRotateXMatrix(float radian) {
+	Matrix4x4 RotateMatrix = { 0 };
+
+	RotateMatrix.m[0][0] = 1;
+	RotateMatrix.m[0][1] = 0;
+	RotateMatrix.m[0][2] = 0;
+	RotateMatrix.m[0][3] = 0;
+
+	RotateMatrix.m[1][0] = 0;
+	RotateMatrix.m[1][1] = std::cosf(radian);
+	RotateMatrix.m[1][2] = std::sinf(radian);
+	RotateMatrix.m[1][3] = 0;
+
+	RotateMatrix.m[2][0] = 0;
+	RotateMatrix.m[2][1] = -(std::sinf(radian));
+	RotateMatrix.m[2][2] = std::cosf(radian);
+	RotateMatrix.m[2][3] = 0;
+
+	RotateMatrix.m[3][0] = 0;
+	RotateMatrix.m[3][1] = 0;
+	RotateMatrix.m[3][2] = 0;
+	RotateMatrix.m[3][3] = 1;
+
+	return RotateMatrix;
+};
+
+// 2 Y軸回転行列
+
+Matrix4x4 MakeRotateYMatrix(float radian) {
+	Matrix4x4 RotateMatrix = { 0 };
+
+	RotateMatrix.m[0][0] = std::cosf(radian);
+	RotateMatrix.m[0][1] = 0;
+	RotateMatrix.m[0][2] = -(std::sinf(radian));
+	RotateMatrix.m[0][3] = 0;
+
+	RotateMatrix.m[1][0] = 0;
+	RotateMatrix.m[1][1] = 1;
+	RotateMatrix.m[1][2] = 0;
+	RotateMatrix.m[1][3] = 0;
+
+	RotateMatrix.m[2][0] = std::sinf(radian);
+	RotateMatrix.m[2][1] = 0;
+	RotateMatrix.m[2][2] = std::cosf(radian);
+	RotateMatrix.m[2][3] = 0;
+
+	RotateMatrix.m[3][0] = 0;
+	RotateMatrix.m[3][1] = 0;
+	RotateMatrix.m[3][2] = 0;
+	RotateMatrix.m[3][3] = 1;
+
+	return RotateMatrix;
+
+
+};
+
+// 3 Z軸回転行列
+
+Matrix4x4 MakeRotateZMatrix(float radian) {
+	Matrix4x4 RotateMatrix = { 0 };
+
+	RotateMatrix.m[0][0] = std::cosf(radian);
+	RotateMatrix.m[0][1] = std::sinf(radian);;
+	RotateMatrix.m[0][2] = 0;
+	RotateMatrix.m[0][3] = 0;
+
+	RotateMatrix.m[1][0] = -(std::sinf(radian));
+	RotateMatrix.m[1][1] = std::cosf(radian);;
+	RotateMatrix.m[1][2] = 0;
+	RotateMatrix.m[1][3] = 0;
+
+	RotateMatrix.m[2][0] = 0;
+	RotateMatrix.m[2][1] = 0;
+	RotateMatrix.m[2][2] = 1;
+	RotateMatrix.m[2][3] = 0;
+
+	RotateMatrix.m[3][0] = 0;
+	RotateMatrix.m[3][1] = 0;
+	RotateMatrix.m[3][2] = 0;
+	RotateMatrix.m[3][3] = 1;
+
+	return RotateMatrix;
+
+
+
+};
