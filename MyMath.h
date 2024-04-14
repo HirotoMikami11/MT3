@@ -223,3 +223,6 @@ Matrix4x4 MakeRotateYMatrix(float radian);
 
 // 3 Z軸回転行列
 Matrix4x4 MakeRotateZMatrix(float radian);
+
+//  XYZ回転行列
+Matrix4x4 MakeRotateXYZMatrix(const Vector3& rotate);
