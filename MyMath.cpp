@@ -246,9 +246,9 @@ unsigned int clampColor(unsigned int& value, unsigned int min, unsigned int max,
 }
 
 void Vector2ScreenPrint(int x, int y, Vector2 vector) {
-	static const int kColumnWidth = 44;
+	static const int kColumnWidthvec2 = 44;
 	Novice::ScreenPrintf(x, y, "%.02f", vector.x);
-	Novice::ScreenPrintf(x + kColumnWidth, y, "%.02f", vector.y);
+	Novice::ScreenPrintf(x + kColumnWidthvec2, y, "%.02f", vector.y);
 
 }
 
@@ -273,13 +273,13 @@ void MyDrawLine(Vector2 startpos, Vector2 endpos, unsigned int color) {
 
 
 void VectorScreenPrintf(int x, int y, const Vector3& vector, const char* label) {
-	static const int kColumnWidth = 60;
-	static const int kRowHeight = 20;
+	static const int kColumnWidthvec3 = 60;
+	static const int kRowHeightvec3 = 20;
 
 	Novice::ScreenPrintf(x, y, "%.02f", vector.x);
-	Novice::ScreenPrintf(x + kColumnWidth, y, "%.02f", vector.y);
-	Novice::ScreenPrintf(x + kColumnWidth * 2, y, "%.02f", vector.z);
-	Novice::ScreenPrintf(x + kColumnWidth * 3, y, "%s", label);
+	Novice::ScreenPrintf(x + kColumnWidthvec3, y, "%.02f", vector.y);
+	Novice::ScreenPrintf(x + kColumnWidthvec3 * 2, y, "%.02f", vector.z);
+	Novice::ScreenPrintf(x + kColumnWidthvec3 * 3, y, "%s", label);
 }
 
 Vector3 Vector3Add(const Vector3& v1, const Vector3& v2) {
@@ -347,7 +347,7 @@ Vector3 Vector3Normalize(const Vector3& v) {
 
 //1.行列の加法
 Matrix2x2 Add(Matrix2x2 matrix1, Matrix2x2 matrix2) {
-	Matrix2x2 result;
+	Matrix2x2 result = { 0 };
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
 			result.m[i][j] = matrix1.m[i][j] + matrix2.m[i][j];
@@ -358,7 +358,7 @@ Matrix2x2 Add(Matrix2x2 matrix1, Matrix2x2 matrix2) {
 
 //2.行列の減法
 Matrix2x2 Subtract(Matrix2x2 matrix1, Matrix2x2 matrix2) {
-	Matrix2x2 result;
+	Matrix2x2 result = {0};
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
 			result.m[i][j] = matrix1.m[i][j] - matrix2.m[i][j];
@@ -369,7 +369,7 @@ Matrix2x2 Subtract(Matrix2x2 matrix1, Matrix2x2 matrix2) {
 //3.行列の積
 Matrix2x2 Multiply(Matrix2x2 matrix1, Matrix2x2 matrix2) {
 
-	Matrix2x2 result;
+	Matrix2x2 result = { 0 };
 
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
@@ -380,7 +380,7 @@ Matrix2x2 Multiply(Matrix2x2 matrix1, Matrix2x2 matrix2) {
 };
 //4.ベクトルと行列の積
 Vector2 Multiply(Vector2 vector, Matrix2x2 matrix) {
-	Vector2 result;
+	Vector2 result = {0};
 	result.x = vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0];
 	result.y = vector.x * matrix.m[0][1] + vector.y * matrix.m[1][1];
 	return result;
@@ -391,7 +391,7 @@ Matrix2x2 Inverse2x2(Matrix2x2 matrix) {
 
 	float scalar = (1 / ((matrix.m[0][0] * matrix.m[1][1]) - (matrix.m[0][1] * matrix.m[1][0])));
 
-	Matrix2x2 m1;
+	Matrix2x2 m1 = {0};
 	m1.m[0][0] = matrix.m[1][1];
 	m1.m[0][1] = -matrix.m[0][1];
 	m1.m[1][0] = -matrix.m[1][0];
@@ -411,7 +411,7 @@ Matrix2x2 Inverse2x2(Matrix2x2 matrix) {
 
 //2x2転置行列を求める
 Matrix2x2 Transpose2x2(Matrix2x2 matrix) {
-	Matrix2x2 result;
+	Matrix2x2 result = {0};
 	//対称になるように変更
 	result.m[1][0] = matrix.m[0][1];
 	result.m[0][1] = matrix.m[1][0];
@@ -426,12 +426,12 @@ Matrix2x2 Transpose2x2(Matrix2x2 matrix) {
 
 //2x2の行列を描画 
 void MatriXScreenPrint2x2(int x, int y, Matrix2x2 matrix) {
-	static const int kRowHeight = 20;
-	static const int kColumnWidth = 44;
+	static const int kRowHeight2x2 = 20;
+	static const int kColumnWidth2x2 = 44;
 	for (int row = 0; row < 2; ++row) {
 		for (int column = 0; column < 2; ++column) {
-			Novice::ScreenPrintf(x + column * kColumnWidth,
-				y + row * kRowHeight, "%.02f ", matrix.m[row][column]);
+			Novice::ScreenPrintf(x + column * kColumnWidth2x2,
+				y + row * kRowHeight2x2, "%.02f ", matrix.m[row][column]);
 		}
 	}
 }
@@ -443,7 +443,7 @@ void MatriXScreenPrint2x2(int x, int y, Matrix2x2 matrix) {
 /*-----------------------------------------------------------------------*/
 
 Matrix3x3 Add(Matrix3x3 matrix1, Matrix3x3 matrix2) {
-	Matrix3x3 result;
+	Matrix3x3 result = { 0 };
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			result.m[i][j] = matrix1.m[i][j] + matrix2.m[i][j];
@@ -453,7 +453,7 @@ Matrix3x3 Add(Matrix3x3 matrix1, Matrix3x3 matrix2) {
 };
 
 Matrix3x3 Subtract(Matrix3x3 matrix1, Matrix3x3 matrix2) {
-	Matrix3x3 result;
+	Matrix3x3 result = {0};
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			result.m[i][j] = matrix1.m[i][j] - matrix2.m[i][j];
@@ -465,7 +465,7 @@ Matrix3x3 Subtract(Matrix3x3 matrix1, Matrix3x3 matrix2) {
 //行列の積
 Matrix3x3 Multiply(Matrix3x3 matrix1, Matrix3x3 matrix2) {
 
-	Matrix3x3 result;
+	Matrix3x3 result = { 0 };
 
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
@@ -482,7 +482,7 @@ Matrix3x3 Multiply(Matrix3x3 matrix1, Matrix3x3 matrix2) {
 
 //回転行列
 Matrix3x3 MakeRotateMatrix(float theta) {
-	Matrix3x3 RotateMatrix;
+	Matrix3x3 RotateMatrix = {0};
 
 	RotateMatrix.m[0][0] = cosf(theta);
 	RotateMatrix.m[0][1] = sinf(theta);
@@ -499,7 +499,7 @@ Matrix3x3 MakeRotateMatrix(float theta) {
 
 //平行移動行列
 Matrix3x3 MakeTranslateMatrix(Vector2 translate) {
-	Matrix3x3 TranslateMatrix;
+	Matrix3x3 TranslateMatrix = { 0 };
 
 	TranslateMatrix.m[0][0] = 1;
 	TranslateMatrix.m[0][1] = 0;
@@ -516,7 +516,7 @@ Matrix3x3 MakeTranslateMatrix(Vector2 translate) {
 
 //拡大縮小行列
 Matrix3x3 MakeScaleMatrix(Vector2 scale) {
-	Matrix3x3 ScaleMatrix;
+	Matrix3x3 ScaleMatrix = { 0 };
 
 	ScaleMatrix.m[0][0] = scale.x;
 	ScaleMatrix.m[0][1] = 0;
@@ -533,7 +533,7 @@ Matrix3x3 MakeScaleMatrix(Vector2 scale) {
 
 //アフィン行列
 Matrix3x3 MakeAffineMatrix(Vector2 scale, float rotate, Vector2 translate) {
-	Matrix3x3 AffineMatrix;
+	Matrix3x3 AffineMatrix = { 0 };
 	AffineMatrix.m[0][0] = scale.x * cosf(rotate);
 	AffineMatrix.m[0][1] = scale.x * sinf(rotate);
 	AffineMatrix.m[0][2] = 0;
@@ -549,7 +549,7 @@ Matrix3x3 MakeAffineMatrix(Vector2 scale, float rotate, Vector2 translate) {
 
 //行列変換
 Vector2 Transform(Vector2 vector, Matrix3x3 matrix) {
-	Vector2 result;//w=1がデカルト座標系であるので(x,y,1)のベクトルとしてmatrixの積をとる
+	Vector2 result = {0};//w=1がデカルト座標系であるので(x,y,1)のベクトルとしてmatrixの積をとる
 	result.x = vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0] + 1.0f * matrix.m[2][0];
 	result.y = vector.x * matrix.m[0][1] + vector.y * matrix.m[1][1] + 1.0f * matrix.m[2][1];
 	float w = vector.x * matrix.m[0][2] + vector.y * matrix.m[1][2] + 1.0f * matrix.m[2][2];
@@ -573,7 +573,7 @@ Matrix3x3 Inverse3x3(Matrix3x3 matrix) {
 			(matrix.m[0][1] * matrix.m[1][0] * matrix.m[2][2]) -
 			(matrix.m[0][0] * matrix.m[1][2] * matrix.m[2][1]));
 
-	Matrix3x3 m1;
+	Matrix3x3 m1 = {0};
 	m1.m[0][0] = matrix.m[1][1] * matrix.m[2][2] - matrix.m[1][2] * matrix.m[2][1];
 	m1.m[0][1] = -(matrix.m[0][1] * matrix.m[2][2] - matrix.m[0][2] * matrix.m[2][1]);
 	m1.m[0][2] = matrix.m[0][1] * matrix.m[1][2] - matrix.m[0][2] * matrix.m[1][1];
@@ -601,7 +601,7 @@ Matrix3x3 Inverse3x3(Matrix3x3 matrix) {
 
 //3x3転置行列を求める
 Matrix3x3 Transpose3x3(Matrix3x3 matrix) {
-	Matrix3x3 result;
+	Matrix3x3 result = { 0 };
 	//対称になるように変更
 	result.m[0][1] = matrix.m[1][0];
 	result.m[0][2] = matrix.m[2][0];
@@ -654,7 +654,7 @@ Matrix3x3 MakeviewportMatrix(float left, float top, float width, float height) {
 //レンダリングパイプラインを生成
 Matrix3x3 MakeWvpVpMatrix(Vector2 localPos, Matrix3x3 worldMatrix, Matrix3x3 viewMatrix, Matrix3x3 orthoMatrix, Matrix3x3 viewportMatrix) {
 
-	Matrix3x3 wvpVpMatrix;
+	Matrix3x3 wvpVpMatrix = {0};
 	worldMatrix = MakeTranslateMatrix(localPos);
 	wvpVpMatrix = Multiply(worldMatrix, viewMatrix);
 	wvpVpMatrix = Multiply(wvpVpMatrix, orthoMatrix);
@@ -665,13 +665,13 @@ Matrix3x3 MakeWvpVpMatrix(Vector2 localPos, Matrix3x3 worldMatrix, Matrix3x3 vie
 
 //3ｘ3の行列を描画
 void MatriXScreenPrint3x3(int x, int y, Matrix3x3 matrix) {
-	static const int kRowHeight = 20;
-	static const int kColumnWidth = 54;
+	static const int kRowHeight3x3 = 20;
+	static const int kColumnWidth3x3 = 54;
 
 	for (int row = 0; row < 3; ++row) {
 		for (int column = 0; column < 3; ++column) {
-			Novice::ScreenPrintf(x + column * kColumnWidth,
-				y + row * kRowHeight, "%.02f ", matrix.m[row][column]);
+			Novice::ScreenPrintf(x + column * kColumnWidth3x3,
+				y + row * kRowHeight3x3, "%.02f ", matrix.m[row][column]);
 		}
 	}
 };
@@ -683,24 +683,25 @@ void MatriXScreenPrint3x3(int x, int y, Matrix3x3 matrix) {
 /*-----------------------------------------------------------------------*/
 
 
-static const int kRowHeight = 20;
-static const int kColumnWidth = 60;
+
 
 //4x4の行列の数値を表示する
 void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label) {
+	static const int kRowHeight4x4 = 20;
+	static const int kColumnWidth4x4 = 60;
 	Novice::ScreenPrintf(x, y, "%s", label);
 	for (int row = 0; row < 4; ++row) {
 		for (int column = 0; column < 4; ++column) {
 			Novice::ScreenPrintf(
-				x + column * kColumnWidth, y + (row + 1) * kRowHeight, "%6.02f", matrix.m[row][column]);
+				x + column * kColumnWidth4x4, y + (row + 1) * kRowHeight4x4, "%6.02f", matrix.m[row][column]);
 		}
 	}
 
 }
 
 // 1. 行列の加法
-Matrix4x4 Matrix4x4Add(const Matrix4x4& m1, const Matrix4x4& m2) {
-	Matrix4x4 result;
+Matrix4x4 Add(const Matrix4x4& m1, const Matrix4x4& m2) {
+	Matrix4x4 result = {0};
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			result.m[i][j] = m1.m[i][j] + m2.m[i][j];
@@ -710,8 +711,8 @@ Matrix4x4 Matrix4x4Add(const Matrix4x4& m1, const Matrix4x4& m2) {
 }
 
 // 2. 行列の減法
-Matrix4x4 Matrix4x4Subtract(const Matrix4x4& m1, const Matrix4x4& m2) {
-	Matrix4x4 result;
+Matrix4x4 Subtract(const Matrix4x4& m1, const Matrix4x4& m2) {
+	Matrix4x4 result = {0};
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			result.m[i][j] = m1.m[i][j] - m2.m[i][j];
@@ -721,8 +722,8 @@ Matrix4x4 Matrix4x4Subtract(const Matrix4x4& m1, const Matrix4x4& m2) {
 }
 
 // 3. 行列の積
-Matrix4x4 Matrix4x4Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
-	Matrix4x4 result;
+Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
+	Matrix4x4 result = {0};
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			result.m[i][j] = {
@@ -738,7 +739,7 @@ Matrix4x4 Matrix4x4Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 }
 
 // 4. 逆行列
-Matrix4x4 Matrix4x4Inverse(const Matrix4x4& m) {
+Matrix4x4 Inverse(const Matrix4x4& m) {
 	//|A|を求める
 	float A = {
 		1 /
@@ -768,7 +769,7 @@ Matrix4x4 Matrix4x4Inverse(const Matrix4x4& m) {
 
 
 	//00_02のP11　１/｜A｜の後ろを書く
-	Matrix4x4 m1;
+	Matrix4x4 m1 = {0};
 	m1.m[0][0] = (
 		(m.m[1][1] * m.m[2][2] * m.m[3][3]) + (m.m[1][2] * m.m[2][3] * m.m[3][1]) + (m.m[1][3] * m.m[2][1] * m.m[3][2])
 		- (m.m[1][3] * m.m[2][2] * m.m[3][1]) - (m.m[1][2] * m.m[2][1] * m.m[3][3]) - (m.m[1][1] * m.m[2][3] * m.m[3][2])
@@ -851,7 +852,7 @@ Matrix4x4 Matrix4x4Inverse(const Matrix4x4& m) {
 		);
 
 
-	Matrix4x4 result;
+	Matrix4x4 result = {0};
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			result.m[i][j] = A * m1.m[i][j];
@@ -862,8 +863,8 @@ Matrix4x4 Matrix4x4Inverse(const Matrix4x4& m) {
 }
 
 // 5. 転置行列
-Matrix4x4 Matrix4x4Transpose(const Matrix4x4& m) {
-	Matrix4x4 result;
+Matrix4x4 Transpose(const Matrix4x4& m) {
+	Matrix4x4 result = {0};
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			result.m[i][j] = { m.m[j][i] };
@@ -876,7 +877,7 @@ Matrix4x4 Matrix4x4Transpose(const Matrix4x4& m) {
 
 // 6. 単位行列の生成
 Matrix4x4 MakeIdentity4x4() {
-	Matrix4x4 result;
+	Matrix4x4 result = {0};
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			//0を入れる
@@ -892,7 +893,7 @@ Matrix4x4 MakeIdentity4x4() {
 
 //1.平行移動行列
 Matrix4x4 MakeTranslateMatrix(const Vector3& translate) {
-	Matrix4x4 TranslateMatrix;
+	Matrix4x4 TranslateMatrix = {0};
 
 	TranslateMatrix.m[0][0] = 1;
 	TranslateMatrix.m[0][1] = 0;
@@ -919,7 +920,7 @@ Matrix4x4 MakeTranslateMatrix(const Vector3& translate) {
 
 //2.拡大縮小行列
 Matrix4x4 MakeScaleMatrix(const Vector3& scale) {
-	Matrix4x4 	ScaleMatrix;
+	Matrix4x4 	ScaleMatrix = {0};
 
 	ScaleMatrix.m[0][0] = scale.x;
 	ScaleMatrix.m[0][1] = 0;
@@ -946,7 +947,7 @@ Matrix4x4 MakeScaleMatrix(const Vector3& scale) {
 
 //3.座標変換
 Vector3 Transform(const Vector3& vector, const Matrix4x4& matrix) {
-	Vector3 result;//w=1がデカルト座標系であるので(x,y,1)のベクトルとしてmatrixの積をとる
+	Vector3 result = {0};//w=1がデカルト座標系であるので(x,y,1)のベクトルとしてmatrixの積をとる
 	result.x = vector.x * matrix.m[0][0] + vector.y * matrix.m[1][0] + vector.z * matrix.m[2][0] + 1.0f * matrix.m[3][0];
 	result.y = vector.x * matrix.m[0][1] + vector.y * matrix.m[1][1] + vector.z * matrix.m[2][1] + 1.0f * matrix.m[3][1];
 	result.z = vector.x * matrix.m[0][2] + vector.y * matrix.m[1][2] + vector.z * matrix.m[2][2] + 1.0f * matrix.m[3][2];
