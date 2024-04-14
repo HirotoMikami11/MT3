@@ -1054,25 +1054,25 @@ Matrix4x4 MakeRotateXYZMatrix(const Vector3& rotate) {
 
 	Matrix4x4 RotateMatrix = { 0 };
 
-	RotateMatrix.m[0][0] = std::cosf(rotate.y) * std::cosf(rotate.z);
-	RotateMatrix.m[0][1] = std::sinf(rotate.z);
-	RotateMatrix.m[0][2] = -(std::sinf(rotate.y));
-	RotateMatrix.m[0][3] = 0;
+	//RotateMatrix.m[0][0] = std::cosf(rotate.y) * std::cosf(rotate.z);
+	//RotateMatrix.m[0][1] = std::sinf(rotate.z);
+	//RotateMatrix.m[0][2] = -(std::sinf(rotate.y));
+	//RotateMatrix.m[0][3] = 0;
 
-	RotateMatrix.m[1][0] = -(std::sinf(rotate.z));
-	RotateMatrix.m[1][1] = std::cosf(rotate.x) * std::cosf(rotate.z);
-	RotateMatrix.m[1][2] = std::sinf(rotate.x);
-	RotateMatrix.m[1][3] = 0;
+	//RotateMatrix.m[1][0] = -(std::sinf(rotate.z));
+	//RotateMatrix.m[1][1] = std::cosf(rotate.x) * std::cosf(rotate.z);
+	//RotateMatrix.m[1][2] = std::sinf(rotate.x);
+	//RotateMatrix.m[1][3] = 0;
 
-	RotateMatrix.m[2][0] = std::sinf(rotate.y);
-	RotateMatrix.m[2][1] = -(std::sinf(rotate.x));
-	RotateMatrix.m[2][2] = std::cosf(rotate.x) * std::cosf(rotate.y);
-	RotateMatrix.m[2][3] = 0;
+	//RotateMatrix.m[2][0] = std::sinf(rotate.y);
+	//RotateMatrix.m[2][1] = -(std::sinf(rotate.x));
+	//RotateMatrix.m[2][2] = std::cosf(rotate.x) * std::cosf(rotate.y);
+	//RotateMatrix.m[2][3] = 0;
 
-	RotateMatrix.m[3][0] = 0;
-	RotateMatrix.m[3][1] = 0;
-	RotateMatrix.m[3][2] = 0;
-	RotateMatrix.m[3][3] = 1;
+	//RotateMatrix.m[3][0] = 0;
+	//RotateMatrix.m[3][1] = 0;
+	//RotateMatrix.m[3][2] = 0;
+	//RotateMatrix.m[3][3] = 1;
 
 	return RotateMatrix;
 
