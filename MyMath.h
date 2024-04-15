@@ -223,3 +223,18 @@ Matrix4x4 MakeRotateYMatrix(float radian);
 
 // 3 Z軸回転行列
 Matrix4x4 MakeRotateZMatrix(float radian);
+
+
+//  XYZ回転行列
+// Matrix4x4 MakeRotateXYZMatrix(const Vector3& rotate);
+
+//アフィン変換行列
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
+
+
+// 1.透視投射行列
+Matrix4x4 MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip);
+// 2.正射影行列
+Matrix4x4 MakeOrthographicMatrix(float left, float top, float right, float bottom, float nearClip, float farClip);
+//　3.ビューポート行列
+Matrix4x4 MakeViewportMatrix(float left, float top, float width,float height, float minDepth, float maxDepth);
