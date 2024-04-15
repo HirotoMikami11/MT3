@@ -20,29 +20,6 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Ve
 	//全部合わせてアフィン行列を作る
 	Matrix4x4 AffineMatrix = Multiply(Multiply(ScaleMatrix, rotateXYZ), TranslateMatrix);
 
-
-	//AffineMatrix.m[0][0] = scale.x * (std::cosf(rotate.y) * std::cosf(rotate.z));
-	//AffineMatrix.m[0][1] = scale.x * std::cosf(rotate.y) * std::sinf(rotate.z);
-	//AffineMatrix.m[0][2] = scale.x * -(std::sinf(rotate.y));
-	//AffineMatrix.m[0][3] = 0;
-
-	//AffineMatrix.m[1][0] = scale.y * (std::sinf(rotate.x) * std::sinf(rotate.y)
-	//	* std::cosf(rotate.z) + std::cosf(rotate.x) * (std::sinf(rotate.z)));
-
-	//AffineMatrix.m[1][1] = scale.y * (std::cosf(rotate.x) * std::cosf(rotate.z));
-	//AffineMatrix.m[1][2] = scale.y * std::sinf(rotate.x);
-	//AffineMatrix.m[1][3] = 0;
-
-	//AffineMatrix.m[2][0] = scale.z * std::sinf(rotate.y);
-	//AffineMatrix.m[2][1] = scale.z * -(std::sinf(rotate.x));
-	//AffineMatrix.m[2][2] = scale.z * (std::cosf(rotate.x) * std::cosf(rotate.y));
-	//AffineMatrix.m[2][3] = 0;
-
-	//AffineMatrix.m[3][0] = translate.x;
-	//AffineMatrix.m[3][1] = translate.y;
-	//AffineMatrix.m[3][2] = translate.z;
-	//AffineMatrix.m[3][3] = 1;
-
 	return AffineMatrix;
 
 
