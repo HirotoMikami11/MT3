@@ -1,6 +1,6 @@
 #include <MyMath.h>
 
-const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_01_01";
+const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_01_01_ポリゴンを描く";
 
 
 // Windowsアプリでのエントリーポイント(main関数)
