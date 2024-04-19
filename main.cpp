@@ -1,6 +1,30 @@
 #include <MyMath.h>
 
-const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_タイトル";
+const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_02_00";
+
+/// <summary>
+/// 直線
+/// </summary>
+struct Line {
+	Vector3 origin;	//!<始点
+	Vector3 diff;	//!<終点への差分ベクトル
+};
+
+/// <summary>
+/// 半直線
+/// </summary>
+struct Ray {
+	Vector3 origin;	//!<始点
+	Vector3 diff;	//!<終点への差分ベクトル
+};
+
+/// <summary>
+/// 線分
+/// </summary>
+struct Segment {
+	Vector3 origin;	//!<始点
+	Vector3 diff;	//!<終点への差分ベクトル
+};
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
