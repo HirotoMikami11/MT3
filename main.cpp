@@ -1,7 +1,7 @@
 #include <MyMath.h>
 #include <imgui.h>
 
-const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_01_02_グリッド、球体を書く";
+const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_01_02";
 struct Sphere {
 	Vector3 center;		//!<中心点
 	float radius;		//!<半径
@@ -12,7 +12,7 @@ struct Sphere {
 /// <param name="viewProjectionMatrix">ビュー行列*プロジェクション行列</param>
 /// <param name="viewportMatrix">ビューポート行列</param>
 void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix) {
-	const float kGridHalfWidth = 1.0f;										//Gridの半分の幅
+	const float kGridHalfWidth = 2.0f;										//Gridの半分の幅
 	const uint32_t kSubdvision = 10;										//分割数
 	const float kGridEvery = (kGridHalfWidth * 2.0f) / float(kSubdvision);	//1つ分の長さ
 
@@ -167,7 +167,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Vector3 cameraTranslate = { 0.0f,1.9f,-6.49f };
 	Vector3 cameraRotate = { 0.26f,0,0 };
 
-	Sphere sphere = { {0,0,0},0.25f };
+	Sphere sphere = { {0,0,0},0.5f };
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
