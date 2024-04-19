@@ -1,4 +1,5 @@
 #include <MyMath.h>
+#include <imgui.h>
 
 const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_タイトル";
 
@@ -12,6 +13,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	char keys[256] = {0};
 	char preKeys[256] = {0};
 
+	const int kWindowWidth = 1280;
+	const int kWindowHeight = 720;
+
+	Vector3 cameraTranslate = { 0.0f,1.9f,-6.49f };
+	Vector3 cameraRotate = { 0.26f,0,0 };
+
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
 		// フレームの開始
@@ -24,7 +31,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
+			//各種行列の計算
+		Matrix4x4 cameraMatrix = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, cameraRotate, cameraTranslate);
+		Matrix4x4 viewMatrix = Inverse(cameraMatrix);
+		Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kWindowWidth) / float(kWindowHeight),
+			0.1f, 100.0f);
 
+		Matrix4x4 viewportMatrix = MakeViewportMatrix(0, 0, float(kWindowWidth), float(kWindowHeight), 0.0f, 1.0f);
+
+
+		ImGui::Begin("Window");
+
+		ImGui::End();
 		///
 		/// ↑更新処理ここまで
 		///
