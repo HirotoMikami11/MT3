@@ -51,6 +51,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 
+
+		DrawGrid(Multiply(viewMatrix, projectionMatrix), viewportMatrix);
+
+
 		///
 		/// ↑描画処理ここまで
 		///
