@@ -226,6 +226,7 @@ Matrix4x4 MakeRotateZMatrix(float radian);
 
 
 //  XYZ回転行列
+// 12回転順序（rotateOrder）はXYZ
 // Matrix4x4 MakeRotateXYZMatrix(const Vector3& rotate);
 
 //アフィン変換行列
