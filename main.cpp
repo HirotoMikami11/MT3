@@ -26,6 +26,21 @@ struct Segment {
 	Vector3 diff;	//!<終点への差分ベクトル
 };
 
+Vector3 Project(const Vector3& v1, const Vector3& v2) {
+	Vector3 project;
+
+	project = Vector3Multiply(Vector3Dot(v1, Vector3Normalize(v2)), Vector3Normalize(v2));
+	return project;
+}
+
+Vector3 ClosestPoint(const Vector3& point, const Segment& segment) {
+	
+	
+	Vector3 closestPoint;
+	Vector3 project = Project(Vector3Subtract(point, segment.origin), segment.diff);
+	closestPoint = Vector3Add(segment.origin,project);
+}
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
@@ -35,6 +50,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
+
+	Segment segment_{ {-2.0f,-1.0f,0.0f},{3.0f,2.0f,2.0f} };
+	Vector3 point_{ -1.5f,0.6f,0.6f };
+	Vector3 project_ = Project(Vector3Subtract(point_, segment_.origin), segment_.diff);
+	Vector3 closestPoint_ = ClosestPoint(point_, segment_);
+
+	//点の描画
+	Sphere pointSphere_{ point_,0.01f };
+	Sphere closestPointSphere_{ closestPoint_,0.01f };
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -49,6 +73,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 
+		
 		///
 		/// ↑更新処理ここまで
 		///
@@ -56,7 +81,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
-
+		//DrawSphere(pointSphere_,)
 		///
 		/// ↑描画処理ここまで
 		///
