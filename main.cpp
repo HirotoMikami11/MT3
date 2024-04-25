@@ -43,6 +43,34 @@ Vector3 ClosestPoint(const Vector3& point, const Segment& segment) {
 	return closestPoint;
 }
 
+
+void DrawLine(const Segment& segment, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color)
+{
+	Vector3 start = segment.origin;
+	Vector3 end = Vector3Add(segment.origin, segment.diff);
+
+	//ワールド
+	Matrix4x4 startWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, start);
+	Matrix4x4 startWorldViewprojectionMatrix = Multiply(startWorldMatrix, viewProjectionMatrix);
+	Matrix4x4 endWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, end);
+	Matrix4x4 endWorldViewprojectionMatrix = Multiply(endWorldMatrix, viewProjectionMatrix);
+
+	//temp
+	Vector3 startTemp = Transform(start, startWorldViewprojectionMatrix);
+	Vector3 screenStart = Transform(startTemp, viewportMatrix);
+	Vector3 endTemp = Transform(end, endWorldViewprojectionMatrix);
+	Vector3 screenEnd = Transform(endTemp, viewportMatrix);
+
+
+	Novice::DrawLine(
+		static_cast<int>(screenStart.x),
+		static_cast<int>(screenStart.y),
+		static_cast<int>(screenEnd.x),
+		static_cast<int>(screenEnd.y),
+		color);
+
+
+}
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
@@ -88,6 +116,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		Matrix4x4 viewportMatrix = MakeViewportMatrix(0, 0, float(kWindowWidth), float(kWindowHeight), 0.0f, 1.0f);
 
 		//点の描画
+		project_ = Project(Vector3Subtract(point_, segment_.origin), segment_.diff);
+		closestPoint_ = ClosestPoint(point_, segment_);
 
 		Sphere pointSphere_{ point_,0.01f };
 		Sphere closestPointSphere_{ closestPoint_,0.01f };
@@ -122,14 +152,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		DrawSphere(closestPointSphere_, viewProjectionMatrix, viewportMatrix, BLACK);
 
 		//線分の描画
-		Novice::DrawLine(
-			static_cast<int>(start.x),
-			static_cast<int>(start.y),
-			static_cast<int>(end.x),
-			static_cast<int>(end.y),
-			WHITE
-
-		);
+		DrawLine(segment_,viewProjectionMatrix,viewportMatrix,WHITE);
 
 		///
 		/// ↑描画処理ここまで
