@@ -45,10 +45,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	const int kWindowWidth = 1280;
 	const int kWindowHeight = 720;
 
-	Vector3 cameraTranslate = { 0.0f,1.9f,-6.49f };
-	Vector3 cameraRotate = { 0.26f,0,0 };
-	//Vector3 cameraTranslate = { 0.0f,3.0f,-12.0f };
-	//Vector3 cameraRotate = { 0.35f,0,0 };
+	//Vector3 cameraTranslate = { 0.0f,1.9f,-6.49f };
+	//Vector3 cameraRotate = { 0.26f,0,0 };
+	Vector3 cameraTranslate = { 0.0f,3.0f,-12.0f };
+	Vector3 cameraRotate = { 0.35f,0,0 };
 
 
 	Sphere sphere_ = { {0,0,0},0.6f };
