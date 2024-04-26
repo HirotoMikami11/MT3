@@ -69,6 +69,29 @@ void MyDrawLine(Vector2 startpos, Vector2 endpos, unsigned int color);
 //
 /*-----------------------------------------------------------------------*/
 
+/// <summary>
+/// 直線
+/// </summary>
+struct Line {
+	Vector3 origin;	//!<始点
+	Vector3 diff;	//!<終点への差分ベクトル
+};
+
+/// <summary>
+/// 半直線
+/// </summary>
+struct Ray {
+	Vector3 origin;	//!<始点
+	Vector3 diff;	//!<終点への差分ベクトル
+};
+
+/// <summary>
+/// 線分
+/// </summary>
+struct Segment {
+	Vector3 origin;	//!<始点
+	Vector3 diff;	//!<終点への差分ベクトル
+};
 
 //３次元ベクトルの値を表示する
 void VectorScreenPrintf(int x, int y, const Vector3& vector, const char* label);
@@ -86,6 +109,11 @@ float Vector3Length(const Vector3& v);
 Vector3 Vector3Normalize(const Vector3& v);
 
 
+Vector3 Project(const Vector3& v1, const Vector3& v2);
+
+Vector3 ClosestPoint(const Vector3& point, const Segment& segment);
+
+void DrawLine(const Segment& segment, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
 
 
 ///*-------------------------------------------------------------------*///

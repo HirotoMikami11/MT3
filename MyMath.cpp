@@ -329,6 +329,50 @@ Vector3 Vector3Normalize(const Vector3& v) {
 }
 
 
+Vector3 Project(const Vector3& v1, const Vector3& v2) {
+	Vector3 project;
+
+	project = Vector3Multiply(Vector3Dot(v1, Vector3Normalize(v2)), Vector3Normalize(v2));
+	return project;
+}
+
+Vector3 ClosestPoint(const Vector3& point, const Segment& segment) {
+
+
+	Vector3 closestPoint;
+	Vector3 project = Project(Vector3Subtract(point, segment.origin), segment.diff);
+	closestPoint = Vector3Add(segment.origin, project);
+	return closestPoint;
+}
+
+
+void DrawLine(const Segment& segment, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color)
+{
+	Vector3 start = segment.origin;
+	Vector3 end = Vector3Add(segment.origin, segment.diff);
+
+	//ワールド
+	Matrix4x4 startWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, start);
+	Matrix4x4 startWorldViewprojectionMatrix = Multiply(startWorldMatrix, viewProjectionMatrix);
+	Matrix4x4 endWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, end);
+	Matrix4x4 endWorldViewprojectionMatrix = Multiply(endWorldMatrix, viewProjectionMatrix);
+
+	//temp
+	Vector3 startTemp = Transform(start, startWorldViewprojectionMatrix);
+	Vector3 screenStart = Transform(startTemp, viewportMatrix);
+	Vector3 endTemp = Transform(end, endWorldViewprojectionMatrix);
+	Vector3 screenEnd = Transform(endTemp, viewportMatrix);
+
+
+	Novice::DrawLine(
+		static_cast<int>(screenStart.x),
+		static_cast<int>(screenStart.y),
+		static_cast<int>(screenEnd.x),
+		static_cast<int>(screenEnd.y),
+		color);
+
+
+}
 
 
 
@@ -1173,7 +1217,9 @@ Matrix4x4 MakeViewportMatrix(float left, float top, float width,
 
 //クロス積
 Vector3 Cross(const Vector3& v1, const Vector3& v2) {
-
+	//クロス積
+//x(aybz-az*by)	y(ax*by-ay*bx)
+//z(azbx-axbz)
 	Vector3 result = {
 		v1.y * v2.z - v1.z * v2.y,
 		v1.z * v2.x - v1.x * v2.z,
