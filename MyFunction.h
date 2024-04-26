@@ -69,8 +69,13 @@ Vector3 Project(const Vector3& v1, const Vector3& v2);
 Vector3 ClosestPoint(const Vector3& point, const Segment& segment);
 
 
-
-
+/// <summary>
+/// 球体と球体の当たり判定を求める関数
+/// </summary>
+/// <param name="s1"></param>
+/// <param name="s2"></param>
+/// <returns></returns>
+bool IsCollision(const Sphere& s1, const Sphere& s2);
 ///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
 
 ///																		///

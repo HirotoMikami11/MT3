@@ -2,26 +2,7 @@
 #include <ImGuiManager.h>
 #include <Camera.h>
 
-const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_02_01";
-
-float Vector3Distance(const Vector3 v1, const Vector3 v2) {
-
-	float result = powf({ v2.x - v1.x }, 2) + powf({ v2.y - v1.y }, 2) + powf({ v2.z - v1.z }, 2);
-	return result;
-}
-
-bool IsCollision(const Sphere& s1, const Sphere& s2) {
-	bool isCollision = false;
-
-	float distance = Vector3Distance(s1.center, s2.center);
-
-	if (distance <= powf(s1.radius + s2.radius, 2)) {
-		isCollision = true;
-
-	}
-
-	return isCollision;
-}
+const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_02_02";
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {

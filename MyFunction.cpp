@@ -26,7 +26,18 @@ Vector3 ClosestPoint(const Vector3& point, const Segment& segment) {
 }
 
 
+bool IsCollision(const Sphere& s1, const Sphere& s2) {
+	bool isCollision = false;
 
+	float distance = Vector3Distance(s1.center, s2.center);
+
+	if (distance <= powf(s1.radius + s2.radius, 2)) {
+		isCollision = true;
+
+	}
+
+	return isCollision;
+}
 
 
 ///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
