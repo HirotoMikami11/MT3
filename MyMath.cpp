@@ -1137,7 +1137,7 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Ve
 	Matrix4x4 rotateY = MakeRotateYMatrix(rotate.y);
 	Matrix4x4 rotateZ = MakeRotateZMatrix(rotate.z);
 	//回転行列
-	Matrix4x4 rotateXYZ = Multiply(rotateX, Multiply(rotateY, rotateZ));
+	Matrix4x4 rotateXYZ = Multiply(Multiply(rotateX, rotateY),rotateZ);
 	//拡大縮小行列
 	Matrix4x4 ScaleMatrix = MakeScaleMatrix(scale);
 
