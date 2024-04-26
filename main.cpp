@@ -50,9 +50,10 @@ void DrawLine(const Segment& segment, const Matrix4x4& viewProjectionMatrix, con
 	Vector3 end = Vector3Add(segment.origin, segment.diff);
 
 	//ワールド
-	Matrix4x4 startWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, start);
+	Matrix4x4 startWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, {0,0,0});
 	Matrix4x4 startWorldViewprojectionMatrix = Multiply(startWorldMatrix, viewProjectionMatrix);
-	Matrix4x4 endWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, end);
+
+	Matrix4x4 endWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, {0,0,0});
 	Matrix4x4 endWorldViewprojectionMatrix = Multiply(endWorldMatrix, viewProjectionMatrix);
 
 	//temp
@@ -147,12 +148,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		//グリッド線の描画
 		DrawGrid(viewProjectionMatrix, viewportMatrix);
-		//点の描画
-		DrawSphere(pointSphere_, viewProjectionMatrix, viewportMatrix, RED);
-		DrawSphere(closestPointSphere_, viewProjectionMatrix, viewportMatrix, BLACK);
 
 		//線分の描画
 		DrawLine(segment_,viewProjectionMatrix,viewportMatrix,WHITE);
+
+		//点の描画
+		DrawSphere(pointSphere_, viewProjectionMatrix, viewportMatrix, RED);
+		DrawSphere(closestPointSphere_, viewProjectionMatrix, viewportMatrix, BLACK);
 
 		///
 		/// ↑描画処理ここまで
