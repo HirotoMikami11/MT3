@@ -1,5 +1,6 @@
-#include <MyMath.h>
+#include <MyFunction.h>
 #include <ImGuiManager.h>
+#include <Camera.h>
 
 const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_02_01";
 
@@ -31,13 +32,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// キー入力結果を受け取る箱
 	char keys[256] = { 0 };
 	char preKeys[256] = { 0 };
-
 	const int kWindowWidth = 1280;
 	const int kWindowHeight = 720;
 
-	Vector3 cameraTranslate = { 0.0f,1.9f,-6.49f };
-	Vector3 cameraRotate = { 0.26f,0,0 };
-
+	Camera* camera_=new Camera(kWindowWidth, kWindowHeight);
 
 	Sphere sphereA_ = { {0,0,0},0.6f };
 	Sphere sphereB_ = { {0.8f,0,1.0f},0.4f };
@@ -57,23 +55,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓更新処理ここから
 		///
 
-		//各種行列の計算
-		Matrix4x4 cameraMatrix = MakeAffineMatrix({ 1.0f,1.0f,1.0f }, cameraRotate, cameraTranslate);
-		Matrix4x4 viewMatrix = Inverse(cameraMatrix);
-		Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kWindowWidth) / float(kWindowHeight),
-			0.1f, 100.0f);
-		Matrix4x4 viewProjectionMatrix = Multiply(viewMatrix, projectionMatrix);
-		Matrix4x4 viewportMatrix = MakeViewportMatrix(0, 0, float(kWindowWidth), float(kWindowHeight), 0.0f, 1.0f);
+		camera_->Update(keys,preKeys);
 
 		IsCollision(sphereA_, sphereB_);
 
 
-		ImGui::Begin("Window");
-		//カメラ
-		ImGui::DragFloat3("CameraTranslate", &cameraTranslate.x, 0.01f);
-		ImGui::DragFloat3("CameraRotate", &cameraRotate.x, 0.01f);
-
-		ImGui::End();
+		camera_->DrawImGui();
 
 		ImGui::Begin("sphere");
 		//カメラ
@@ -95,12 +82,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		/// ↓描画処理ここから
 		///
 		//グリッド線の描画
-		DrawGrid(viewProjectionMatrix, viewportMatrix);
+		DrawGrid(camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix());
 		//スフィアの描画
 
 
-		DrawSphere(sphereA_, viewProjectionMatrix, viewportMatrix, IsCollision(sphereA_, sphereB_) ? RED : WHITE);
-		DrawSphere(sphereB_, viewProjectionMatrix, viewportMatrix, IsCollision(sphereA_, sphereB_) ? RED : WHITE);
+		DrawSphere(sphereA_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), IsCollision(sphereA_, sphereB_) ? RED : WHITE);
+		DrawSphere(sphereB_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), IsCollision(sphereA_, sphereB_) ? RED : WHITE);
 
 		///
 		/// ↑描画処理ここまで
@@ -115,6 +102,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 	}
 
+	delete camera_;
 	// ライブラリの終了
 	Novice::Finalize();
 	return 0;

@@ -14,6 +14,15 @@
     <Filter Include="KamataEngine\Adapter">
       <UniqueIdentifier>{c6468eb4-788b-4a83-b207-a5f4804e56c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyLibrary">
+      <UniqueIdentifier>{91e63fc1-9514-4b8d-a8ad-2c4f540fdbee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyLibrary\MyMath">
+      <UniqueIdentifier>{201996b1-ade2-4ec0-aadc-da8d21d1a4ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyLibrary\Camera">
+      <UniqueIdentifier>{2719f5d5-aca4-469e-9df3-e6d39bf0ffda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp">
@@ -38,8 +47,14 @@
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\StringUtility.cpp">
       <Filter>KamataEngine\Source</Filter>
     </ClCompile>
+    <ClCompile Include="MyFunction.cpp">
+      <Filter>MyLibrary</Filter>
+    </ClCompile>
     <ClCompile Include="MyMath.cpp">
-      <Filter>KamataEngine</Filter>
+      <Filter>MyLibrary\MyMath</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>MyLibrary\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,14 +121,30 @@
     <ClInclude Include="C:\KamataEngine\DirectXGame\3d\SpotLight.h">
       <Filter>KamataEngine\Include</Filter>
     </ClInclude>
-    <ClInclude Include="C:\KamataEngine\DirectXGame\math\Matrix4x4.h" />
-    <ClInclude Include="C:\KamataEngine\DirectXGame\math\Vector2.h" />
-    <ClInclude Include="C:\KamataEngine\DirectXGame\math\Vector3.h" />
-    <ClInclude Include="C:\KamataEngine\DirectXGame\math\Vector4.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\2d\ImGuiManager.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\base\StringUtility.h">
       <Filter>KamataEngine\Include</Filter>
     </ClInclude>
-    <ClInclude Include="MyMath.h" />
+    <ClInclude Include="MyFunction.h">
+      <Filter>MyLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\KamataEngine\DirectXGame\math\Matrix4x4.h">
+      <Filter>MyLibrary\MyMath</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMath.h">
+      <Filter>MyLibrary\MyMath</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\KamataEngine\DirectXGame\math\Vector3.h">
+      <Filter>MyLibrary\MyMath</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\KamataEngine\DirectXGame\math\Vector2.h">
+      <Filter>MyLibrary\MyMath</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\KamataEngine\DirectXGame\math\Vector4.h">
+      <Filter>MyLibrary\MyMath</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>MyLibrary\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -10,18 +10,27 @@
 #include <cmath> //C++
 
 static const int kRowHeight = 20;
-static const int kColumnWidth = 60;
-///*-------------------------------------------------------------------*///
-///
+
+///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
+
+///																		///
 ///								ベクトル
-///
-///*-------------------------------------------------------------------*///
+///																		///
+
+///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
 
 /*-----------------------------------------------------------------------*/
 //
 //								2次元ベクトル
 //
 /*-----------------------------------------------------------------------*/
+
+//整数型のVector2
+struct Vector2Int {
+	int x;
+	int y;
+};
+
 
 //線形補間関数
 Vector2 Lerp(const Vector2& a, const Vector2& b, float t);
@@ -69,29 +78,6 @@ void MyDrawLine(Vector2 startpos, Vector2 endpos, unsigned int color);
 //
 /*-----------------------------------------------------------------------*/
 
-/// <summary>
-/// 直線
-/// </summary>
-struct Line {
-	Vector3 origin;	//!<始点
-	Vector3 diff;	//!<終点への差分ベクトル
-};
-
-/// <summary>
-/// 半直線
-/// </summary>
-struct Ray {
-	Vector3 origin;	//!<始点
-	Vector3 diff;	//!<終点への差分ベクトル
-};
-
-/// <summary>
-/// 線分
-/// </summary>
-struct Segment {
-	Vector3 origin;	//!<始点
-	Vector3 diff;	//!<終点への差分ベクトル
-};
 
 //３次元ベクトルの値を表示する
 void VectorScreenPrintf(int x, int y, const Vector3& vector, const char* label);
@@ -109,17 +95,18 @@ float Vector3Length(const Vector3& v);
 Vector3 Vector3Normalize(const Vector3& v);
 
 
-Vector3 Project(const Vector3& v1, const Vector3& v2);
-
-Vector3 ClosestPoint(const Vector3& point, const Segment& segment);
 
 
 
-///*-------------------------------------------------------------------*///
-///
+
+
+///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
+
+///																		///
 ///								行列
-///
-///*-------------------------------------------------------------------*///
+///																		///
+
+///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
 
 
 /*-----------------------------------------------------------------------*/
@@ -270,28 +257,3 @@ Matrix4x4 MakeViewportMatrix(float left, float top, float width,
 //クロス積
 Vector3 Cross(const Vector3& v1, const Vector3& v2);
 
-
-//スフィア
-struct Sphere {
-	Vector3 center;		//!<中心点
-	float radius;		//!<半径
-};
-
-/// <summary>
-/// グリッド線を引く関数
-/// </summary>
-/// <param name="viewProjectionMatrix">ビュー行列*プロジェクション行列</param>
-/// <param name="viewportMatrix">ビューポート行列</param>
-void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix);
-
-/// <summary>
-/// スフィアを作る関数
-/// </summary>
-/// <param name="sphere">スフィア</param>
-/// <param name="viewProjectionMatrix">ビュープロジェクション</param>
-/// <param name="viewportMatrix">ビューポート</param>
-/// <param name="color"></param>
-void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix,
-	uint32_t color);
-
-void DrawLine(const Segment& segment, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
