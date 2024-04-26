@@ -115,9 +115,6 @@ Vector3 ClosestPoint(const Vector3& point, const Segment& segment);
 
 
 
-float Vector3Distance(const Vector3 v1, const Vector3 v2);
-bool IsCollision(const Sphere& s1, const Sphere& s2);
-
 ///*-------------------------------------------------------------------*///
 ///
 ///								行列
