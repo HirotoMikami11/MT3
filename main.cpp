@@ -2,10 +2,12 @@
 #include <imgui.h>
 
 const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_01_02";
+
 struct Sphere {
 	Vector3 center;		//!<中心点
 	float radius;		//!<半径
 };
+
 /// <summary>
 /// グリッド線を引く関数
 /// </summary>
