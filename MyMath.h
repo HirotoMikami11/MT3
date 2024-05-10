@@ -96,6 +96,7 @@ Vector3 Vector3Normalize(const Vector3& v);
 
 float Vector3Distance(const Vector3 v1, const Vector3 v2);
 
+float Abs(const float f);
 
 
 
