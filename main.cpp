@@ -2,19 +2,25 @@
 #include <ImGuiManager.h>
 #include <Camera.h>
 
-const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_02_02";
+const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_02_03";
 
 bool IsCollision(const Segment& segment, const Plane& plane) {
+	//segmentのo=origin,b=diff
+
 	bool isCollision = false;
 
-	float dot = Vector3Dot(plane.normal, segment.diff);
-	if (dot==0.0f) {
+	float dot = Vector3Dot(segment.diff, plane.normal);
+
+	//線と平面が並行の時
+	//b・n＝0の時0除算なので衝突しない
+
+	if (dot == 0.0f) {
 		return false;
 	}
-	
-	float t = (plane.distance - Vector3Dot(segment.origin, plane.normal)) / dot;
 
-	if (t > -1 && t < 2) {
+	float t = (plane.distance - (Vector3Dot(segment.origin, plane.normal))) / dot;
+
+	if (t > 0 && t < 1) {
 		isCollision = true;
 	}
 
@@ -82,7 +88,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//グリッド線の描画
 		DrawGrid(camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix());
 		//ライン
-		DrawLine(segment_,camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), IsCollision(segment_, plane_) ? RED : WHITE);
+		DrawLine(segment_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), IsCollision(segment_, plane_) ? RED : WHITE);
 		//スフィアの描画
 		DrawPlane(plane_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), WHITE);
 
