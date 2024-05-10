@@ -6,14 +6,14 @@ const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_02_03";
 
 bool IsCollision(const Segment& segment, const Plane& plane) {
 	//segmentのo=origin,b=diff
-
+	
+	//衝突しているかどうか
 	bool isCollision = false;
 
 	float dot = Vector3Dot(segment.diff, plane.normal);
 
 	//線と平面が並行の時
 	//b・n＝0の時0除算なので衝突しない
-
 	if (dot == 0.0f) {
 		return false;
 	}
