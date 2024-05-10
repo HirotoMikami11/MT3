@@ -27,13 +27,27 @@ struct Segment {
 	Vector3 diff;	//!<終点への差分ベクトル
 };
 
+/// <summary>
+/// 正射影ベクトル
+/// </summary>
+/// <param name="v1"></param>
+/// <param name="v2"></param>
+/// <returns></returns>
 Vector3 Project(const Vector3& v1, const Vector3& v2) {
+	//v1をv2に正射影したベクトル
+	//(v1と(v2を単位ベクトルにしたもの)を内積したもの)に(v2を単位ベクトルにしたもの)をかける
 	Vector3 project;
-
-	project = Vector3Multiply(Vector3Dot(v1, Vector3Normalize(v2)), Vector3Normalize(v2));
+	project = Vector3Multiply(Vector3Dot(v1, Vector3Normalize(v2))
+		, Vector3Normalize(v2));
 	return project;
 }
 
+/// <summary>
+/// 最近接点を求める
+/// </summary>
+/// <param name="point"></param>
+/// <param name="segment"></param>
+/// <returns></returns>
 Vector3 ClosestPoint(const Vector3& point, const Segment& segment) {
 
 
@@ -122,6 +136,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		Sphere pointSphere_{ point_,0.01f };
 		Sphere closestPointSphere_{ closestPoint_,0.01f };
+		
 
 		//線分の計算
 		Vector3 start = Transform(Transform(segment_.origin, viewProjectionMatrix), viewportMatrix);
