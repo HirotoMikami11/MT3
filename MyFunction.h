@@ -42,6 +42,13 @@ struct Segment {
 	Vector3 diff;	//!<終点への差分ベクトル
 };
 
+/// <summary>
+/// 平面
+/// </summary>
+struct Plane {
+	Vector3 normal;	//!<法線
+	float distance;	//!<距離
+};
 
 ///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
 
@@ -68,6 +75,12 @@ Vector3 Project(const Vector3& v1, const Vector3& v2);
 /// <returns></returns>
 Vector3 ClosestPoint(const Vector3& point, const Segment& segment);
 
+/// <summary>
+/// 垂直なベクトルを求める
+/// </summary>
+/// <param name="vector"></param>
+/// <returns></returns>
+Vector3 Perpendicular(const Vector3& vector);
 
 /// <summary>
 /// 球体と球体の当たり判定を求める関数
@@ -76,6 +89,18 @@ Vector3 ClosestPoint(const Vector3& point, const Segment& segment);
 /// <param name="s2"></param>
 /// <returns></returns>
 bool IsCollision(const Sphere& s1, const Sphere& s2);
+
+/// <summary>
+/// 球体と平面の衝突判定
+/// </summary>
+/// <param name="sphere"></param>
+/// <param name="plane"></param>
+/// <returns></returns>
+bool IsCollision(const Sphere& sphere, const Plane& plane);
+
+
+
+
 ///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
 
 ///																		///
@@ -111,4 +136,13 @@ void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMa
 /// <param name="color"></param>
 void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix,
 	uint32_t color);
+
+/// <summary>
+/// 平面を作る関数
+/// </summary>
+/// <param name="plane"></param>
+/// <param name="viewProjectionMatrix"></param>
+/// <param name="viewportMatrix"></param>
+/// <param name="color"></param>
+void DrawPlane(const Plane& plane, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
 

@@ -25,6 +25,12 @@ Vector3 ClosestPoint(const Vector3& point, const Segment& segment) {
 	return closestPoint;
 }
 
+Vector3 Perpendicular(const Vector3& vector) {
+	if (vector.x != 0.0f || vector.y != 0.0f) {
+		return{ -vector.y,vector.x,0.0f };
+	}
+	return { 0.0f,-vector.z,vector.y };
+}
 
 bool IsCollision(const Sphere& s1, const Sphere& s2) {
 	bool isCollision = false;
@@ -37,6 +43,24 @@ bool IsCollision(const Sphere& s1, const Sphere& s2) {
 	}
 
 	return isCollision;
+}
+
+
+bool IsCollision(const Sphere& sphere, const Plane& plane) {
+
+	bool isCollison = false;
+	//平面と中心点との距離を求める
+	float Distance = Vector3Dot(plane.normal, sphere.center) - plane.distance;
+	//絶対値を取る
+	Distance = Abs(Distance);
+
+	//衝突していたらtrue
+	if (Distance <= sphere.radius) {
+		isCollison = true;
+	}
+
+	return isCollison;
+
 }
 
 
@@ -97,7 +121,6 @@ void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMa
 		Vector3 endPos = { pos_x,0,kGridHalfWidth };
 
 
-		//スクリーン座標系まで変換をかける
 		//スクリーン座標系まで変換をかける
 		Matrix4x4 startWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
 		Matrix4x4 startWorldViewProjectionMatrix = Multiply(startWorldMatrix, viewProjectionMatrix);
@@ -235,4 +258,58 @@ void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, con
 	}
 
 
+}
+
+
+
+void DrawPlane(const Plane& plane, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color) {
+	//1.中心点を決める
+	Vector3 center = Vector3Multiply(plane.distance, plane.normal);
+	Vector3 perpendiculars[4];
+
+	//2.法線と垂直なベクトルを一つ求める
+	perpendiculars[0] = Vector3Normalize(Perpendicular(plane.normal));
+
+	//3.[2]の逆ベクトルを求める
+	perpendiculars[1] = { -perpendiculars[0].x,-perpendiculars[0].y,-perpendiculars[0].z };
+	//4.[2]と法線とのクロス積を求める
+	perpendiculars[2] = Cross(plane.normal, perpendiculars[0]);
+	//5.[4]の逆ベクトルを決める
+	perpendiculars[3] = { -perpendiculars[2].x,-perpendiculars[2].y,-perpendiculars[2].z };
+	//6.[2]~[5]のベクトルを中心点にそれぞれ定数倍捨て足すと4頂点が出来上がる
+	Vector3 points[4];
+	for (int32_t i = 0; i < 4; i++) {
+		Vector3 extend = Vector3Multiply(2.0f, perpendiculars[i]);
+		Vector3 point = Vector3Add(center, extend);
+		points[i] = Transform(Transform(point, viewProjectionMatrix), viewportMatrix);
+	}
+
+	Novice::DrawLine(
+		static_cast<int>(points[0].x),
+		static_cast<int>(points[0].y),
+		static_cast<int>(points[3].x),
+		static_cast<int>(points[3].y),
+		color
+	);
+	Novice::DrawLine(
+		static_cast<int>(points[0].x),
+		static_cast<int>(points[0].y),
+		static_cast<int>(points[2].x),
+		static_cast<int>(points[2].y),
+		color
+	);
+	Novice::DrawLine(
+		static_cast<int>(points[1].x),
+		static_cast<int>(points[1].y),
+		static_cast<int>(points[2].x),
+		static_cast<int>(points[2].y),
+		color
+	);
+	Novice::DrawLine(
+		static_cast<int>(points[1].x),
+		static_cast<int>(points[1].y),
+		static_cast<int>(points[3].x),
+		static_cast<int>(points[3].y),
+		color
+	);
 }
