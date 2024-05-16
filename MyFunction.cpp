@@ -49,24 +49,26 @@ bool IsCollision(const Sphere& s1, const Sphere& s2) {
 ///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
 
 
+///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
+
+///																		///
+///								描画関数
+///																		///
+
+///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
+
+
 void DrawLine(const Segment& segment, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color)
 {
 	Vector3 start = segment.origin;
 	Vector3 end = Vector3Add(segment.origin, segment.diff);
 
-	//ワールド
-	Matrix4x4 startWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
-	Matrix4x4 startWorldViewprojectionMatrix = Multiply(startWorldMatrix, viewProjectionMatrix);
-
-	Matrix4x4 endWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
-	Matrix4x4 endWorldViewprojectionMatrix = Multiply(endWorldMatrix, viewProjectionMatrix);
-
 	//temp
-	Vector3 startTemp = Transform(start, startWorldViewprojectionMatrix);
+	Vector3 startTemp = Transform(start, viewProjectionMatrix);
 	Vector3 screenStart = Transform(startTemp, viewportMatrix);
-	Vector3 endTemp = Transform(end, endWorldViewprojectionMatrix);
-	Vector3 screenEnd = Transform(endTemp, viewportMatrix);
 
+	Vector3 endTemp = Transform(end, viewProjectionMatrix);
+	Vector3 screenEnd = Transform(endTemp, viewportMatrix);
 
 	Novice::DrawLine(
 		static_cast<int>(screenStart.x),
@@ -98,14 +100,9 @@ void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMa
 
 
 		//スクリーン座標系まで変換をかける
-		//スクリーン座標系まで変換をかける
-		Matrix4x4 startWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
-		Matrix4x4 startWorldViewProjectionMatrix = Multiply(startWorldMatrix, viewProjectionMatrix);
-		Vector3 startNdcPos = Transform(startPos, startWorldViewProjectionMatrix);
+		Vector3 startNdcPos = Transform(startPos, viewProjectionMatrix);
 
-		Matrix4x4 endWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
-		Matrix4x4 endWorldViewProjectionMatrix = Multiply(endWorldMatrix, viewProjectionMatrix);
-		Vector3 endNdcPos = Transform(endPos, endWorldViewProjectionMatrix);
+		Vector3 endNdcPos = Transform(endPos, viewProjectionMatrix);
 
 		Vector3 screenStartPos = Transform(startNdcPos, viewportMatrix);
 
@@ -129,13 +126,13 @@ void DrawGrid(const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMa
 
 
 		//スクリーン座標系まで変換をかける
-		Matrix4x4 startWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
-		Matrix4x4 startWorldViewProjectionMatrix = Multiply(startWorldMatrix, viewProjectionMatrix);
-		Vector3 startNdcPos = Transform(startPos, startWorldViewProjectionMatrix);
+		//Matrix4x4 startWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
+		//Matrix4x4 startWorldViewProjectionMatrix = Multiply(startWorldMatrix, viewProjectionMatrix);
+		Vector3 startNdcPos = Transform(startPos, viewProjectionMatrix);
 
-		Matrix4x4 endWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
-		Matrix4x4 endWorldViewProjectionMatrix = Multiply(endWorldMatrix, viewProjectionMatrix);
-		Vector3 endNdcPos = Transform(endPos, endWorldViewProjectionMatrix);
+		//Matrix4x4 endWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
+		//Matrix4x4 endWorldViewProjectionMatrix = Multiply(endWorldMatrix, viewProjectionMatrix);
+		Vector3 endNdcPos = Transform(endPos, viewProjectionMatrix);
 
 		Vector3 screenStartPos = Transform(startNdcPos, viewportMatrix);
 
@@ -201,21 +198,21 @@ void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, con
 			c = Vector3Add(sphere.center, Vector3Multiply(sphere.radius, c));
 
 			//a,b,c,をScreen座標系まで変換する
-			Matrix4x4 AWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
-			Matrix4x4 AWorldViewProjectionMatrix = Multiply(AWorldMatrix, viewProjectionMatrix);
-			Vector3 ANdcPos = Transform(a, AWorldViewProjectionMatrix);
+			//Matrix4x4 AWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
+			//Matrix4x4 AWorldViewProjectionMatrix = Multiply(AWorldMatrix, viewProjectionMatrix);
+			Vector3 ANdcPos = Transform(a, viewProjectionMatrix);
 
-			Matrix4x4 BWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
-			Matrix4x4 BWorldViewProjectionMatrix = Multiply(BWorldMatrix, viewProjectionMatrix);
-			Vector3 BNdcPos = Transform(b, BWorldViewProjectionMatrix);
+			//Matrix4x4 BWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
+			//Matrix4x4 BWorldViewProjectionMatrix = Multiply(BWorldMatrix, viewProjectionMatrix);
+			Vector3 BNdcPos = Transform(b, viewProjectionMatrix);
 
-			Matrix4x4 CWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
-			Matrix4x4 CWorldViewProjectionMatrix = Multiply(CWorldMatrix, viewProjectionMatrix);
-			Vector3 CNdcPos = Transform(c, CWorldViewProjectionMatrix);
+			//Matrix4x4 CWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
+			//Matrix4x4 CWorldViewProjectionMatrix = Multiply(CWorldMatrix, viewProjectionMatrix);
+			Vector3 CNdcPos = Transform(c, viewProjectionMatrix);
 
-			Vector3 screenAPos = Transform(Transform(a, AWorldViewProjectionMatrix), viewportMatrix);
-			Vector3 screenBPos = Transform(Transform(b, BWorldViewProjectionMatrix), viewportMatrix);
-			Vector3 screenCPos = Transform(Transform(c, CWorldViewProjectionMatrix), viewportMatrix);
+			Vector3 screenAPos = Transform(ANdcPos, viewportMatrix);
+			Vector3 screenBPos = Transform(BNdcPos, viewportMatrix);
+			Vector3 screenCPos = Transform(CNdcPos, viewportMatrix);
 
 			//ab,bcで線を引く
 			Novice::DrawLine(
@@ -236,3 +233,6 @@ void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, con
 
 
 }
+
+
+
