@@ -70,6 +70,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		ImGui::Begin("object");
 		////カメラ
 		ImGui::DragFloat3("plane_normal", &plane_.normal.x, 0.01f);
+		plane_.normal = Vector3Normalize(plane_.normal);
 		ImGui::DragFloat("plane_distance", &plane_.distance, 0.01f);
 		ImGui::DragFloat3("segment_.origin", &segment_.origin.x, 0.01f);
 		ImGui::DragFloat3("segment_.diff", &segment_.diff.x, 0.01f);
