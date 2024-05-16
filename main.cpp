@@ -58,24 +58,18 @@ Vector3 ClosestPoint(const Vector3& point, const Segment& segment) {
 }
 
 
+
 void DrawLine(const Segment& segment, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color)
 {
 	Vector3 start = segment.origin;
 	Vector3 end = Vector3Add(segment.origin, segment.diff);
 
-	//ワールド
-	Matrix4x4 startWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, {0,0,0});
-	Matrix4x4 startWorldViewprojectionMatrix = Multiply(startWorldMatrix, viewProjectionMatrix);
-
-	Matrix4x4 endWorldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, {0,0,0});
-	Matrix4x4 endWorldViewprojectionMatrix = Multiply(endWorldMatrix, viewProjectionMatrix);
-
 	//temp
-	Vector3 startTemp = Transform(start, startWorldViewprojectionMatrix);
+	Vector3 startTemp = Transform(start, viewProjectionMatrix);
 	Vector3 screenStart = Transform(startTemp, viewportMatrix);
-	Vector3 endTemp = Transform(end, endWorldViewprojectionMatrix);
-	Vector3 screenEnd = Transform(endTemp, viewportMatrix);
 
+	Vector3 endTemp = Transform(end, viewProjectionMatrix);
+	Vector3 screenEnd = Transform(endTemp, viewportMatrix);
 
 	Novice::DrawLine(
 		static_cast<int>(screenStart.x),
@@ -86,6 +80,7 @@ void DrawLine(const Segment& segment, const Matrix4x4& viewProjectionMatrix, con
 
 
 }
+
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
