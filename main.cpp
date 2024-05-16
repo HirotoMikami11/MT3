@@ -22,7 +22,7 @@ bool IsCollision(const Segment& segment, const Plane& plane) {
 
 	float t = (plane.distance - (Vector3Dot(segment.origin, plane.normal))) / dot;
 
-	if (t > 0 && t < 1) {
+	if (t >= 0 && t <= 1) {
 		isCollision = true;
 	}
 
