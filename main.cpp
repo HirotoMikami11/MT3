@@ -28,17 +28,37 @@ bool IsCollision(const Segment& segment, const Plane& plane) {
 
 }
 
-//bool IsCollision(const Segment& segment, const Triangle& triangle) {
-//
-//
-//}
+bool IsCollision(const Segment& segment, const Triangle& triangle) {
+
+	//衝突しているかどうか
+	bool isCollision = false;
+
+
+	//各辺を結んだベクトルベクトル
+	Vector3 v01;
+	Vector3 v12;
+	Vector3 v20;
+
+	//頂点と衝突点Pを結んだベクトル
+	Vector3 vp[3];
+
+	//クロス積
+	Vector3 cross01 = Cross(v01, vp[1]);
+	Vector3 cross12 = Cross(v12, vp[2]);
+	Vector3 cross20 = Cross(v20, vp[0]);
+
+	//全ての小さい三角形のクロス積と法線が同じ方法を向いていたら衝突
+	if (true) {
+		isCollision = true;
+	}
+	return isCollision;
+}
+
 /// <summary>
 /// 三角形
 /// </summary>
 struct Triangle {
-
 	Vector3 vertices[3];//!<頂点
-
 };
 
 
