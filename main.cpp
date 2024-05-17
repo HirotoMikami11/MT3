@@ -51,14 +51,13 @@ struct Triangle {
 /// <param name="color"></param>
 void DrawTriangle(const Triangle& triangle, const Matrix4x4& viewProjectionMatrix,
 	const Matrix4x4& viewportMatrix, uint32_t color) {
-	Matrix4x4 worldMatrix = MakeAffineMatrix({ 1,1,1 }, { 0,0,0 }, { 0,0,0 });
-	Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, viewProjectionMatrix);
+
 	Vector3 ndcPos[3];
 	Vector3 screenPos[3];
 
 	//スクリーン座標系まで変換をかける
 	for (int i = 0; i < 3; i++) {
-		ndcPos[i] = Transform(triangle.vertices[i], worldViewProjectionMatrix);
+		ndcPos[i] = Transform(triangle.vertices[i], viewProjectionMatrix);
 		screenPos[i] = Transform(ndcPos[i], viewportMatrix);
 	}
 
