@@ -62,7 +62,29 @@ bool IsCollision(const Sphere& sphere, const Plane& plane) {
 	return isCollison;
 
 }
+bool IsCollision(const Segment& segment, const Plane& plane) {
+	//segmentのo=origin,b=diff
 
+	//衝突しているかどうか
+	bool isCollision = false;
+
+	float dot = Vector3Dot(segment.diff, plane.normal);
+
+	//線と平面が並行の時
+	//b・n＝0の時0除算なので衝突しない
+	if (dot == 0.0f) {
+		return false;
+	}
+
+	float t = (plane.distance - (Vector3Dot(segment.origin, plane.normal))) / dot;
+
+	if (t > 0 && t < 1) {
+		isCollision = true;
+	}
+
+	return isCollision;
+
+}
 
 ///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
 

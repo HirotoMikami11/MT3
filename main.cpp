@@ -3,33 +3,19 @@
 #include <Camera.h>
 
 const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_02_04";
+/// <summary>
+/// 三角形
+/// </summary>
+struct Triangle {
+	Vector3 vertices[3];//!<頂点
+};
 
-bool IsCollision(const Segment& segment, const Plane& plane) {
-	//segmentのo=origin,b=diff
 
-	//衝突しているかどうか
-	bool isCollision = false;
-
-	float dot = Vector3Dot(segment.diff, plane.normal);
-
-	//線と平面が並行の時
-	//b・n＝0の時0除算なので衝突しない
-	if (dot == 0.0f) {
-		return false;
-	}
-
-	float t = (plane.distance - (Vector3Dot(segment.origin, plane.normal))) / dot;
-
-	if (t > 0 && t < 1) {
-		isCollision = true;
-	}
-
-	return isCollision;
-
-}
 
 bool IsCollision(const Segment& segment, const Triangle& triangle) {
 
+	segment;
+	triangle;
 	//衝突しているかどうか
 	bool isCollision = false;
 
@@ -54,12 +40,7 @@ bool IsCollision(const Segment& segment, const Triangle& triangle) {
 	return isCollision;
 }
 
-/// <summary>
-/// 三角形
-/// </summary>
-struct Triangle {
-	Vector3 vertices[3];//!<頂点
-};
+
 
 
 /// <summary>
@@ -137,8 +118,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		ImGui::Begin("object");
 		////カメラ
-		//ImGui::DragFloat3("plane_normal", &plane_.normal.x, 0.01f);
-		//ImGui::DragFloat("plane_distance", &plane_.distance, 0.01f);
+		ImGui::DragFloat3("Triangle.v0", &triangle_.vertices[0].x, 0.01f);
+		ImGui::DragFloat3("Triangle.v1", &triangle_.vertices[1].x, 0.01f);
+		ImGui::DragFloat3("Triangle.v2", &triangle_.vertices[2].x, 0.01f);
 		ImGui::DragFloat3("segment_.origin", &segment_.origin.x, 0.01f);
 		ImGui::DragFloat3("segment_.diff", &segment_.diff.x, 0.01f);
 
@@ -158,7 +140,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//グリッド線の描画
 		DrawGrid(camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix());
 		//ライン
-		//DrawLine(segment_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), IsCollision(segment_, plane_) ? RED : WHITE);
+		DrawLine(segment_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), IsCollision(segment_, triangle_) ? RED : WHITE);
 		//三角形の描画
 		DrawTriangle(triangle_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), WHITE);
 

@@ -98,7 +98,13 @@ bool IsCollision(const Sphere& s1, const Sphere& s2);
 /// <returns></returns>
 bool IsCollision(const Sphere& sphere, const Plane& plane);
 
-
+/// <summary>
+/// 平面と線の衝突判定
+/// </summary>
+/// <param name="segment"></param>
+/// <param name="plane"></param>
+/// <returns></returns>
+bool IsCollision(const Segment& segment, const Plane& plane);
 
 
 ///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
