@@ -10,32 +10,107 @@ struct Triangle {
 	Vector3 vertices[3];//!<頂点
 };
 
+bool IsCollision(const Segment& segment, const Vector3& normal, const float& distance) {
+	//segmentのo=origin,b=diff
 
-
-bool IsCollision(const Segment& segment, const Triangle& triangle) {
-
-	segment;
-	triangle;
 	//衝突しているかどうか
 	bool isCollision = false;
 
+	float dot = Vector3Dot(segment.diff, normal);
 
-	//各辺を結んだベクトルベクトル
-	Vector3 v01;
-	Vector3 v12;
-	Vector3 v20;
+	//線と平面が並行の時
+	//b・n＝0の時0除算なので衝突しない
+	if (dot == 0.0f) {
+		return false;
+	}
 
-	//頂点と衝突点Pを結んだベクトル
-	Vector3 vp[3];
+	float t = (distance - (Vector3Dot(segment.origin, normal))) / dot;
 
-	//クロス積
-	Vector3 cross01 = Cross(v01, vp[1]);
-	Vector3 cross12 = Cross(v12, vp[2]);
-	Vector3 cross20 = Cross(v20, vp[0]);
-
-	//全ての小さい三角形のクロス積と法線が同じ方法を向いていたら衝突
-	if (true) {
+	if (t > 0 && t < 1) {
 		isCollision = true;
+	}
+
+	return isCollision;
+
+}
+Vector3 MakeCollisionPoint(const Segment& segment, const Vector3& normal, const float& distance) {
+	//segmentのo=origin,b=diff
+
+	//衝突点
+	Vector3 CollisionPoint;
+
+	float dot = Vector3Dot(segment.diff, normal);
+
+	//線と平面が並行の時
+	//b・n＝0の時0除算なので衝突しない
+	if (dot == 0.0f) {
+		return { 0,0,0 };
+	}
+
+	float t = (distance - (Vector3Dot(segment.origin, normal))) / dot;
+
+
+	CollisionPoint = Vector3Add(segment.origin, Vector3Multiply(t, segment.diff));
+
+	return CollisionPoint;
+
+}
+bool IsCollision(const Segment& segment, const Triangle& triangle) {
+
+	//衝突しているかどうか
+	bool isCollision = false;
+
+	//
+	///	線と三角形の存在する平面との衝突判定を行う
+	//
+
+	//三角形の中心座標
+	Vector3 TriangleCenter = {
+		(triangle.vertices[0].x + triangle.vertices[1].x + triangle.vertices[2].x) / 3,
+		(triangle.vertices[0].y + triangle.vertices[1].y + triangle.vertices[2].y) / 3,
+		(triangle.vertices[0].z + triangle.vertices[1].z + triangle.vertices[2].z) / 3
+	};
+
+	//平面を作るのに必要な値を作る
+	//距離
+	float distance = Vector3Distance(TriangleCenter,{0,0,0});
+	//法線ベクトル
+	Vector3 normal = Cross(Vector3Subtract(triangle.vertices[1], triangle.vertices[0]), Vector3Subtract(triangle.vertices[2], triangle.vertices[1]));
+
+
+	//
+	///	線と三角形の存在する平面とが衝突していたら衝突点が内側か調べる
+	//
+
+	if (IsCollision(segment, normal, distance)) {
+		//衝突点p
+		Vector3 p = MakeCollisionPoint(segment, normal, distance);
+
+
+		//各辺を結んだベクトルベクトル
+		Vector3 v01 = Vector3Subtract(triangle.vertices[1], triangle.vertices[0]);
+		Vector3 v12 = Vector3Subtract(triangle.vertices[2], triangle.vertices[1]);
+		Vector3 v20 = Vector3Subtract(triangle.vertices[2], triangle.vertices[0]);
+
+		//頂点と衝突点Pを結んだベクトル
+		Vector3 vp[3];
+		for (int i = 0; i < 3; i++) {
+			vp[i] = Vector3Subtract(p,triangle.vertices[i]);
+		}
+
+		//クロス積
+		Vector3 cross01 = Cross(v01, vp[1]);
+		Vector3 cross12 = Cross(v12, vp[2]);
+		Vector3 cross20 = Cross(v20, vp[0]);
+
+		//全ての小さい三角形のクロス積と法線が同じ方法を向いていたら衝突
+		if (
+			Vector3Dot(cross01, normal) >= 0.0f &&
+			Vector3Dot(cross12, normal) >= 0.0f &&
+			Vector3Dot(cross20, normal) >= 0.0f
+			) {
+			isCollision = true;
+		}
 	}
 	return isCollision;
 }
@@ -89,7 +164,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Camera* camera_ = new Camera(kWindowWidth, kWindowHeight);
 
-	Segment segment_ = { {-0.45f,0.7f,0.0f},{1.0f,0.5f,0.0f} };
+	Segment segment_ =
+	{ {0.0f,0.5f,0.0f},
+		{0.0f,0.5f,2.0f} };
 	Triangle triangle_ = {
 		{{-1,0,0}
 		,{0,1,0}

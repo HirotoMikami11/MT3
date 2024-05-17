@@ -86,6 +86,8 @@ bool IsCollision(const Segment& segment, const Plane& plane) {
 
 }
 
+
+
 ///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
 
 ///																		///
