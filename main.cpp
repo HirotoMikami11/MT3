@@ -2,8 +2,15 @@
 #include <ImGuiManager.h>
 #include <Camera.h>
 
-const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_02_04";
+const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_02_05";
 
+/// <summary>
+/// 軸並行境界箱
+/// </summary>
+struct AABB {
+	Vector3 min;//!<最小点
+	Vector3 max;//!<最大点
+};
 
 
 
@@ -21,15 +28,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Camera* camera_ = new Camera(kWindowWidth, kWindowHeight);
 
-	Segment segment_ =
-	{ {0.0f,0.5f,0.0f},
-		{0.0f,0.5f,2.0f} };
-	Triangle triangle_ = {
-		{{-1,0,0}
-		,{0,1,0}
-		,{1,0,0}
-		}
-	};
+	AABB box1;
+	AABB box2;
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -52,12 +52,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		ImGui::Begin("object");
 		////カメラ
-		ImGui::DragFloat3("Triangle.v0", &triangle_.vertices[0].x, 0.01f);
-		ImGui::DragFloat3("Triangle.v1", &triangle_.vertices[1].x, 0.01f);
-		ImGui::DragFloat3("Triangle.v2", &triangle_.vertices[2].x, 0.01f);
-		ImGui::DragFloat3("segment_.origin", &segment_.origin.x, 0.01f);
-		ImGui::DragFloat3("segment_.diff", &segment_.diff.x, 0.01f);
-
+		//ImGui::DragFloat3("Triangle.v0", &triangle_.vertices[0].x, 0.01f);
+		//ImGui::DragFloat3("Triangle.v1", &triangle_.vertices[1].x, 0.01f);
+		//ImGui::DragFloat3("Triangle.v2", &triangle_.vertices[2].x, 0.01f);
+		//ImGui::DragFloat3("segment_.origin", &segment_.origin.x, 0.01f);
+		//ImGui::DragFloat3("segment_.diff", &segment_.diff.x, 0.01f);
 
 
 		ImGui::End();
@@ -73,10 +72,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		//グリッド線の描画
 		DrawGrid(camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix());
-		//ライン
-		DrawLine(segment_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), IsCollision(segment_, triangle_) ? RED : WHITE);
-		//三角形の描画
-		DrawTriangle(triangle_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), WHITE);
+		////ライン
+		//DrawLine(segment_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), IsCollision(segment_, triangle_) ? RED : WHITE);
+		////三角形の描画
+		//DrawTriangle(triangle_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), WHITE);
 
 		///
 		/// ↑描画処理ここまで
