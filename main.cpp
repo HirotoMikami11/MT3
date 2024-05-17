@@ -39,17 +39,16 @@ Vector3 MakeCollisionPoint(const Segment& segment, const Vector3& normal, const 
 	//衝突点
 	Vector3 CollisionPoint;
 
+	//平面と線の衝突判定と同様
 	float dot = Vector3Dot(segment.diff, normal);
-
-	//線と平面が並行の時
-	//b・n＝0の時0除算なので衝突しない
-	if (dot == 0.0f) {
-		return { 0,0,0 };
-	}
+	
+	///衝突したら衝突点を計算するのでdotが0にはならないはず
+	assert(dot != 0.0f);
 
 	float t = (distance - (Vector3Dot(segment.origin, normal))) / dot;
 
-
+	//p=o+tb
+	//衝突点=origin+t*diff
 	CollisionPoint = Vector3Add(segment.origin, Vector3Multiply(t, segment.diff));
 
 	return CollisionPoint;
@@ -73,7 +72,7 @@ bool IsCollision(const Segment& segment, const Triangle& triangle) {
 
 	//平面を作るのに必要な値を作る
 	//距離
-	float distance = Vector3Distance(TriangleCenter,{0,0,0});
+	float distance = Vector3Distance(TriangleCenter, { 0,0,0 });
 	//法線ベクトル
 	Vector3 normal = Cross(Vector3Subtract(triangle.vertices[1], triangle.vertices[0]), Vector3Subtract(triangle.vertices[2], triangle.vertices[1]));
 
@@ -83,19 +82,18 @@ bool IsCollision(const Segment& segment, const Triangle& triangle) {
 	//
 
 	if (IsCollision(segment, normal, distance)) {
-		//衝突点p
+		//衝突点pを計算
 		Vector3 p = MakeCollisionPoint(segment, normal, distance);
 
-
-		//各辺を結んだベクトルベクトル
+		//各辺を結んだベクトル
 		Vector3 v01 = Vector3Subtract(triangle.vertices[1], triangle.vertices[0]);
 		Vector3 v12 = Vector3Subtract(triangle.vertices[2], triangle.vertices[1]);
-		Vector3 v20 = Vector3Subtract(triangle.vertices[2], triangle.vertices[0]);
+		Vector3 v20 = Vector3Subtract(triangle.vertices[0], triangle.vertices[2]);
 
 		//頂点と衝突点Pを結んだベクトル
 		Vector3 vp[3];
 		for (int i = 0; i < 3; i++) {
-			vp[i] = Vector3Subtract(p,triangle.vertices[i]);
+			vp[i] = Vector3Subtract(p, triangle.vertices[i]);
 		}
 
 		//クロス積

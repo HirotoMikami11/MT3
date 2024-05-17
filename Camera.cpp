@@ -27,7 +27,7 @@ void Camera::Initialize(const Vector3& scale, const Vector3& rotate, const Vecto
 	viewMatrix_ = Inverse(cameraMatrix_);
 	viewProjectionMatrix_ = Multiply(viewMatrix_, projectionMatrix_);
 	///カメラ移動
-	ismove_ = false;
+	ismove_ = true;
 
 }
 
