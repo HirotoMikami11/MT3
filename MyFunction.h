@@ -50,6 +50,13 @@ struct Plane {
 	float distance;	//!<距離
 };
 
+/// <summary>
+/// 三角形
+/// </summary>
+struct Triangle {
+	Vector3 vertices[3];//!<頂点
+};
+
 ///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
 
 ///																		///
@@ -85,27 +92,52 @@ Vector3 Perpendicular(const Vector3& vector);
 /// <summary>
 /// 球体と球体の当たり判定を求める関数
 /// </summary>
-/// <param name="s1"></param>
-/// <param name="s2"></param>
+/// <param name="s1">球体1</param>
+/// <param name="s2">球体2</param>
 /// <returns></returns>
 bool IsCollision(const Sphere& s1, const Sphere& s2);
 
 /// <summary>
 /// 球体と平面の衝突判定
 /// </summary>
-/// <param name="sphere"></param>
-/// <param name="plane"></param>
+/// <param name="sphere">球体</param>
+/// <param name="plane">平面</param>
 /// <returns></returns>
 bool IsCollision(const Sphere& sphere, const Plane& plane);
 
 /// <summary>
-/// 平面と線の衝突判定
+/// 平面と線分の衝突判定
 /// </summary>
-/// <param name="segment"></param>
-/// <param name="plane"></param>
+/// <param name="segment">線分</param>
+/// <param name="plane">平面</param>
 /// <returns></returns>
 bool IsCollision(const Segment& segment, const Plane& plane);
 
+/// <summary>
+/// 線分と平面の衝突判定（三角形の衝突判定を作る用）
+/// </summary>
+/// <param name="segment">線分</param>
+/// <param name="normal">平面の法線</param>
+/// <param name="distance">平面と原点距離</param>
+/// <returns></returns>
+bool IsCollision(const Segment& segment, const Vector3& normal, const float& distance);
+
+/// <summary>
+/// 平面と線分の衝突点を求める
+/// </summary>
+/// <param name="segment">線分</param>
+/// <param name="normal">平面の法線</param>
+/// <param name="distance">平面と原点距離</param>
+/// <returns></returns>
+Vector3 MakeCollisionPoint(const Segment& segment, const Vector3& normal, const float& distance);
+
+/// <summary>
+/// 三角形の衝突判定
+/// </summary>
+/// <param name="segment">線分</param>
+/// <param name="triangle">三角形</param>
+/// <returns></returns>
+bool IsCollision(const Segment& segment, const Triangle& triangle);
 
 ///xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
 
@@ -151,4 +183,15 @@ void DrawSphere(const Sphere& sphere, const Matrix4x4& viewProjectionMatrix, con
 /// <param name="viewportMatrix"></param>
 /// <param name="color"></param>
 void DrawPlane(const Plane& plane, const Matrix4x4& viewProjectionMatrix, const Matrix4x4& viewportMatrix, uint32_t color);
+
+
+/// <summary>
+/// 三角形を描画
+/// </summary>
+/// <param name="triangle"></param>
+/// <param name="viewProjectionMatrix"></param>
+/// <param name="viewportMatrix"></param>
+/// <param name="color"></param>
+void DrawTriangle(const Triangle& triangle, const Matrix4x4& viewProjectionMatrix,
+	const Matrix4x4& viewportMatrix, uint32_t color);
 
