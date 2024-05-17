@@ -38,7 +38,7 @@ public:
 	/// <param name="translate"></param>
 	void Initialize(const Vector3& scale = { 1.0f,1.0f,1.0f }, const Vector3& rotate = { 0.26f, 0.0f, 0.0f }, const Vector3& translate = { 0.0f, 1.9f, -6.49f });
 	void Update(const char* keys, const char* preKeys);
-
+	void IsMove(const char* keys, const char* preKeys);
 	/// <summary>
 	/// カメラのデバッグ
 	/// </summary>

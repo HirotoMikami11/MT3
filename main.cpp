@@ -2,7 +2,7 @@
 #include <ImGuiManager.h>
 #include <Camera.h>
 
-const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_02_04";
+const char kWindowTitle[] = "LE1A_16_ミカミ_ヒロト_MT3_02_03";
 
 bool IsCollision(const Segment& segment, const Plane& plane) {
 	//segmentのo=origin,b=diff
