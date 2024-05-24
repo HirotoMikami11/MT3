@@ -125,9 +125,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///minmaxを正しくする
 		NormalizeAABB(aabb1);
 		NormalizeAABB(aabb2);
-		///当たり判定
-		IsCollision(aabb1, aabb2);
-
 
 		camera_->DrawImGui();
 
