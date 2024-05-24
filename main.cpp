@@ -29,14 +29,14 @@ void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const  Ma
 
 	Vector3 vertices[8];
 
-	///上の四辺
+	///上の四頂点
 	vertices[0] = { aabb.max.x,aabb.max.y,aabb.max.z };//右上奥
 	vertices[1] = { aabb.min.x,aabb.max.y,aabb.max.z };//左上奥
 
 	vertices[2] = { aabb.max.x,aabb.max.y,aabb.min.z };//右上手前
 	vertices[3] = { aabb.min.x,aabb.max.y,aabb.min.z };//左上手前
 
-	//下の四辺
+	///下の四頂点
 	vertices[4] = { aabb.max.x,aabb.min.y,aabb.max.z };//右下奥
 	vertices[5] = { aabb.min.x,aabb.min.y,aabb.max.z };//左下奥
 
@@ -51,8 +51,22 @@ void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const  Ma
 		screenVertices[i] = Transform(NdcVertices[i], viewportMatrix);
 	}
 
-	for (int i = 0; i < 8; i += 4) {
-		Novice::DrawBox(static_cast<int>(screenVertices[i].x), static_cast<int>(screenVertices[i+1].x), static_cast<int>(screenVertices[i + 2].x), static_cast<int>(screenVertices[i+3].x), 0.0f, color, kFillModeWireFrame);
+	///描画する場所
+	const int edges[12][2] = {
+		{0, 1}, {1, 3}, {3, 2}, {2, 0}, //上面
+		{4, 5}, {5, 7}, {7, 6}, {6, 4}, //下面
+		{0, 4}, {1, 5}, {2, 6}, {3, 7}  //上面と下面をつなぐ線
+	};
+
+	///AABBを描画
+	for (int i = 0; i < 12; i++) {
+		Novice::DrawLine(
+			static_cast<int>(screenVertices[edges[i][0]].x),
+			static_cast<int>(screenVertices[edges[i][0]].y),
+			static_cast<int>(screenVertices[edges[i][1]].x),
+			static_cast<int>(screenVertices[edges[i][1]].y),
+			color
+		);
 	}
 
 }
@@ -108,20 +122,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 
 		camera_->Update(keys, preKeys);
-
-
+		///minmaxを正しくする
+		NormalizeAABB(aabb1);
+		NormalizeAABB(aabb2);
+		///当たり判定
+		IsCollision(aabb1, aabb2);
 
 
 		camera_->DrawImGui();
 
 		ImGui::Begin("object");
 		////カメラ
-		//ImGui::DragFloat3("Triangle.v0", &triangle_.vertices[0].x, 0.01f);
-		//ImGui::DragFloat3("Triangle.v1", &triangle_.vertices[1].x, 0.01f);
-		//ImGui::DragFloat3("Triangle.v2", &triangle_.vertices[2].x, 0.01f);
-		//ImGui::DragFloat3("segment_.origin", &segment_.origin.x, 0.01f);
-		//ImGui::DragFloat3("segment_.diff", &segment_.diff.x, 0.01f);
-
+		ImGui::DragFloat3("aabb1.max", &aabb1.max.x, 0.01f);
+		ImGui::DragFloat3("aabb1.min", &aabb1.min.x, 0.01f);
+		ImGui::DragFloat3("aabb2.max", &aabb2.max.x, 0.01f);
+		ImGui::DragFloat3("aabb2.min", &aabb2.min.x, 0.01f);
+		NormalizeAABB(aabb1);
+		NormalizeAABB(aabb2);
 
 		ImGui::End();
 
@@ -140,9 +157,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//DrawLine(segment_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), IsCollision(segment_, triangle_) ? RED : WHITE);
 		////三角形の描画
 		//DrawTriangle(triangle_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), WHITE);
-
-		DrawAABB(aabb1, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), WHITE);
-		DrawAABB(aabb2, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), WHITE);
+		//
+		DrawAABB(aabb1, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), IsCollision(aabb1, aabb2) ? RED : WHITE);
+		//
+		DrawAABB(aabb2, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), IsCollision(aabb1, aabb2) ? RED : WHITE);
 
 		///
 		/// ↑描画処理ここまで
