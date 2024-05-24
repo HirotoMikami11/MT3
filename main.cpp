@@ -24,21 +24,23 @@ bool IsCollision(const AABB& aabb1, const AABB& aabb2) {
 
 }
 
-void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix,const  Matrix4x4& viewportMatrix, uint32_t color) {
+void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix, const  Matrix4x4& viewportMatrix, uint32_t color) {
 
 
 	Vector3 vertices[8];
 
 	///上の四辺
 	vertices[0] = { aabb.max.x,aabb.max.y,aabb.max.z };//右上奥
-	vertices[1] = { aabb.max.x,aabb.max.y,aabb.min.z };//右上手前
-	vertices[2] = { aabb.min.x,aabb.max.y,aabb.max.z };//左上奥
+	vertices[1] = { aabb.min.x,aabb.max.y,aabb.max.z };//左上奥
+
+	vertices[2] = { aabb.max.x,aabb.max.y,aabb.min.z };//右上手前
 	vertices[3] = { aabb.min.x,aabb.max.y,aabb.min.z };//左上手前
 
 	//下の四辺
 	vertices[4] = { aabb.max.x,aabb.min.y,aabb.max.z };//右下奥
-	vertices[5] = { aabb.max.x,aabb.min.y,aabb.min.z };//右下手前
-	vertices[6] = { aabb.min.x,aabb.min.y,aabb.max.z };//左下奥
+	vertices[5] = { aabb.min.x,aabb.min.y,aabb.max.z };//左下奥
+
+	vertices[6] = { aabb.max.x,aabb.min.y,aabb.min.z };//右下手前
 	vertices[7] = { aabb.min.x,aabb.min.y,aabb.min.z };//左下手前
 
 	Vector3 NdcVertices[8];
@@ -49,8 +51,8 @@ void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjectionMatrix,const  Mat
 		screenVertices[i] = Transform(NdcVertices[i], viewportMatrix);
 	}
 
-	for (int i = 0; i < 8; i +=4) {
-		Novice::DrawBox(static_cast<int>(screenVertices[i].y), static_cast<int>(screenVertices[i].y), static_cast<int>(screenVertices[i].y), static_cast<int>(screenVertices[i].y), 0.0f, color, kFillModeWireFrame);
+	for (int i = 0; i < 8; i += 4) {
+		Novice::DrawBox(static_cast<int>(screenVertices[i].x), static_cast<int>(screenVertices[i+1].x), static_cast<int>(screenVertices[i + 2].x), static_cast<int>(screenVertices[i+3].x), 0.0f, color, kFillModeWireFrame);
 	}
 
 }
@@ -90,7 +92,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	.min{0.2f,0.2f,0.2f},
 	.max{1.0f,1.0f,1.0f}
 	};
-
+	NormalizeAABB(aabb1);
+	NormalizeAABB(aabb2);
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
 		// フレームの開始
@@ -106,8 +109,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		camera_->Update(keys, preKeys);
 
-		NormalizeAABB(aabb1);
-		NormalizeAABB(aabb2);
+
 
 
 		camera_->DrawImGui();
@@ -138,9 +140,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//DrawLine(segment_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), IsCollision(segment_, triangle_) ? RED : WHITE);
 		////三角形の描画
 		//DrawTriangle(triangle_, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), WHITE);
-	
+
 		DrawAABB(aabb1, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), WHITE);
-		DrawAABB(aabb1, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), WHITE);
+		DrawAABB(aabb2, camera_->GetViewProjectionMatrix(), camera_->GetViewportMatrix(), WHITE);
 
 		///
 		/// ↑描画処理ここまで
