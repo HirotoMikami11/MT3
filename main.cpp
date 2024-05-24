@@ -13,6 +13,34 @@ struct AABB {
 };
 
 
+bool IsCollision(const AABB& aabb1, const AABB& aabb2) {
+	aabb1;
+	aabb2;
+}
+
+void DrawAABB(const AABB& aabb, const Matrix4x4& viewProjection, Matrix4x4& viewportMatrix, uint32_t color) {
+
+
+
+
+
+
+
+
+}
+
+/// <summary>
+/// 最大最小を正しくする関数
+/// </summary>
+/// <param name="aabb"></param>
+void NormalizeAABB(AABB& aabb) {
+	aabb.min.x = (std::min)(aabb.min.x, aabb.max.x);
+	aabb.max.x = (std::max)(aabb.min.x, aabb.max.x);
+	aabb.min.y = (std::min)(aabb.min.y, aabb.max.y);
+	aabb.max.y = (std::max)(aabb.min.y, aabb.max.y);
+	aabb.min.z = (std::min)(aabb.min.z, aabb.max.z);
+	aabb.max.z = (std::max)(aabb.min.z, aabb.max.z);
+}
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -28,8 +56,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	Camera* camera_ = new Camera(kWindowWidth, kWindowHeight);
 
-	AABB box1;
-	AABB box2;
+	AABB aabb1{
+	.min{-0.5f,-0.5f,-0.5f},
+	.max{0.0f,0.0f,0.0f}
+	};
+	AABB aabb2{
+	.min{0.2f,0.2f,0.2f},
+	.max{1.0f,1.0f,1.0f}
+	};
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -46,6 +80,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		camera_->Update(keys, preKeys);
 
+		NormalizeAABB(aabb1);
+		NormalizeAABB(aabb2);
 
 
 		camera_->DrawImGui();
